@@ -2,7 +2,7 @@
 
 [![CI Pipeline](https://github.com/mcshayla/jwt-pizza/actions/workflows/deploy.yml/badge.svg)](https://github.com/mcshayla/jwt-pizza/actions/workflows/deploy.yml)
 
-![Coverage badge](https://pizza-factory.cs329.click/api/badge/accountId/jwtpizzacoverage?t=1)
+![Coverage badge](https://pizza-factory.cs329.click/api/badge/mcshayla/jwtpizzacoverage?t=1)
 
 ![Coverage badge](https://pizza-factory.cs329.click/api/badge/mcshayla/jwtpizzacoverage)
 
