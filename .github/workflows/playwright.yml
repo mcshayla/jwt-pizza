@@ -19,6 +19,11 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Run tests
+      run: |
+        npx playwright install --with-deps chromium
+        npm run test:coverage
+    
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
