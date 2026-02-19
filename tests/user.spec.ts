@@ -123,6 +123,24 @@ async function basicInit(page: Page) {
     }
   });
 
+  // Get users list for admin dashboard
+  await page.route(/\/api\/user(\?.*)?$/, async (route) => {
+    const method = route.request().method();
+
+    if (method === 'GET') {
+      const usersRes = {
+        users: Object.values(validUsers).map(u => ({
+          id: u.id,
+          name: u.name,
+          email: u.email,
+          roles: u.roles
+        })),
+        more: false
+      };
+      await route.fulfill({ json: usersRes });
+    }
+  });
+
   //create franchise
   // await page.route('*/**/api/franchise', async (route) => {
   await page.route(/\/api\/franchise(\?.*)?$/, async (route) => {
@@ -199,9 +217,8 @@ async function basicInit(page: Page) {
     await route.fulfill({ json: menuRes });
   });
 
-  //updateUser
+  //updateUser and deleteUser
   await page.route('*/**/api/user/*', async (route) => {
-    const orderReq = route.request().postDataJSON();
     const method = route.request().method();
 
     if (method === 'PUT') {
@@ -221,6 +238,16 @@ async function basicInit(page: Page) {
 
       await route.fulfill({ 
         json: { user: updatedUser, token: 'abcdef' } 
+      });
+    } else if (method === 'DELETE') {
+      const userId = route.request().url().split('/').pop();
+      // Find and remove user by id
+      const userToDelete = Object.values(validUsers).find(u => u.id === userId);
+      if (userToDelete) {
+        delete validUsers[userToDelete.email];
+      }
+      await route.fulfill({ 
+        json: { message: 'User deleted' } 
       });
     }
   });
@@ -336,6 +363,16 @@ test('getUsersList', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Filter Users List' }).fill('a');
   await page.getByTestId('submit-users-filter').click();
   await page.getByRole('cell', { name: 'a' }).nth(3).click();
+});
+
+test('deleteUser', async ({ page }) => {
+  await basicInit(page);
+  await loginAsAdmin(page);
+  await page.getByRole('link', { name: 'Admin' }).click();
+  await page.getByRole('heading', { name: 'Users List' }).waitFor({ state: 'visible' });
+  await page.getByRole('cell', { name: 'Kai Chen' }).waitFor({ state: 'visible' });
+  await page.getByRole('button', { name: /Close/ }).first().click();
+  await page.getByRole('cell', { name: 'Kai Chen' }).waitFor({ state: 'hidden' });
 });
 
 
