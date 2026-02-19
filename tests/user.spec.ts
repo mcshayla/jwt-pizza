@@ -326,3 +326,16 @@ test('updateUserPassword', async ({ page }) => {
   await page.getByRole('link', { name: 'KC' }).click();
   await expect(page.getByRole('main')).toContainText('Kai Chen');
 });
+
+
+test('getUsersList', async ({ page }) => {
+  await basicInit(page);
+  await loginAsAdmin(page);
+  await page.getByRole('link', { name: 'Admin' }).click();
+  await page.getByRole('heading', { name: 'Users List' }).click();
+  await page.getByRole('textbox', { name: 'Filter Users List' }).fill('a');
+  await page.getByTestId('submit-users-filter').click();
+  await page.getByRole('cell', { name: 'a' }).nth(3).click();
+});
+
+

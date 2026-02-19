@@ -344,32 +344,15 @@ test('create Franchise', async ({page}) => {
   await page.getByRole('button', { name: 'Create' }).click();
   await page.getByRole('textbox', { name: 'Filter franchises' }).click();
   await page.getByRole('textbox', { name: 'Filter franchises' }).fill('TEST TEST');
-  await page.getByRole('button', { name: 'Submit' }).click();
-  await expect(page.getByRole('table')).toContainText('TEST TEST');
+  await page.getByTestId('submit-franchise-filter').click();
+  await expect(page.getByRole('table').nth(1)).toContainText('TEST TEST');
   await page.locator('body').click();
-  
-  // await page.getByRole('textbox', { name: 'Filter franchises' }).click();
-  // await page.getByRole('textbox', { name: 'Filter franchises' }).fill('mytest');
-  // await page.getByRole('button', { name: 'Submit' }).click();
-
 });
 
 test('new test', async ({page}) => {
   await basicInit(page);
   await loginAsAdmin(page);
-  // await page.goto('http://localhost:5173/');
-  // await page.getByRole('link', { name: 'Login' }).click();
-  // await page.getByRole('textbox', { name: 'Email address' }).fill('a@jwt.com');
-  // await page.getByRole('textbox', { name: 'Email address' }).press('Tab');
-  // await page.getByRole('textbox', { name: 'Password' }).fill('admin');
-  // await page.getByRole('textbox', { name: 'Password' }).press('Enter');
-  // await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Admin' }).click();
-  // await page.getByRole('cell', { name: 'Admin Franchise 02jlja5iu4' }).click();
-  // await page.getByRole('cell', { name: '8imoozhida' }).click();
-  // await page.getByRole('cell', { name: 'Admin Franchise 02jlja5iu4' }).click();
-  // await page.getByRole('cell', { name: 'Admin Franchise 02jlja5iu4' }).click();
-  // await page.getByRole('cell', { name: 'ng2j2gl9a4' }).click();
   await page.getByRole('link', { name: 'Franchise' }).click();
   await page.getByRole('button', { name: 'Create store' }).click();
   await page.getByRole('textbox', { name: 'store name' }).click();
@@ -381,31 +364,3 @@ test('new test', async ({page}) => {
   await page.getByRole('button', { name: 'Close' }).click();
 });
 
-// test('new test', async ({page}) => {
-//   await page.goto('http://localhost:5173/');
-//   await page.getByRole('link', { name: 'Login' }).click();
-//   await page.getByRole('textbox', { name: 'Email address' }).fill('a@jwt.com');
-//   await page.getByRole('textbox', { name: 'Email address' }).press('Tab');
-//   await page.getByRole('textbox', { name: 'Password' }).fill('admin');
-//   await page.getByRole('textbox', { name: 'Password' }).press('Enter');
-//   await page.getByRole('button', { name: 'Login' }).click();
-//   await page.getByRole('link', { name: 'Admin' }).click();
-//   await page.getByRole('button', { name: 'Add Franchise' }).click();
-//   await page.getByRole('textbox', { name: 'franchise name' }).click();
-//   await page.getByRole('textbox', { name: 'franchise name' }).fill('Test Test');
-//   await page.getByRole('textbox', { name: 'franchise name' }).press('Tab');
-//   await page.getByRole('textbox', { name: 'franchisee admin email' }).fill('a@jwt.com');
-//   await page.getByRole('button', { name: 'Create' }).click();
-//   await page.getByRole('button', { name: 'Create' }).click();
-//   await page.getByRole('textbox', { name: 'franchise name' }).click();
-//   await page.getByRole('textbox', { name: 'franchise name' }).fill('mytest');
-//   await page.getByRole('textbox', { name: 'franchisee admin email' }).click();
-//   await page.getByRole('button', { name: 'Create' }).click();
-//   await page.getByRole('textbox', { name: 'Filter franchises' }).click();
-//   await page.getByRole('textbox', { name: 'Filter franchises' }).fill('mytest');
-//   await page.getByRole('button', { name: 'Submit' }).click();
-//   await page.getByRole('button', { name: 'Close' }).click();
-//   await expect(page.getByRole('heading')).toContainText('Sorry to see you go');
-//   await expect(page.getByRole('main')).toContainText('TEST TEST');
-//   await page.getByRole('button', { name: 'Close' }).click();
-// });
