@@ -190,3 +190,48 @@ Self-hosted server is required for Jenkins though where GitHub has a free tier f
         }
     }
 } ```
+
+- The above is what a similar CI pipeline would look like in Jenkins for what we did in github actions in this class.
+
+# Experiement:
+1. Run docker run -p 8080:8080 jenkins/jenkins:lts
+2. Go to http://localhost:8080 and install suggested plugins for Jenkins
+3. Create username and password
+
+I experimented doing a small helow World pipeline:
+1. I created a script and pasted this:
+ ``` pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello from Jenkins!'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo Building version $(date +%Y%m%d.%H%M%S)'
+            }
+        }
+        stage('Done') {
+            steps {
+                echo 'Pipeline complete.'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+        }
+    }
+} ```
+
+ - It's pretty similar to github actions pipeline and the states just run in order.
+ - I ran the build and then observed the results in the console log which also looked very similar to github actions
+
+ ![Stage view](./script_pipeline.png)
+ ![Stage view](./console_log.png)
+
+
