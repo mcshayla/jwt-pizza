@@ -1,10 +1,10 @@
-### Jenkins
+# Jenkins
 
-# why I chose this project?
+## why I chose this project?
  - I have a job interview coming up and they asked if I had experience or knowledge of Jenkins.
 
  
-# What it is?
+## What it is?
 Jenkins solves the same problem that Github Actions solves. Jenkins allows for Continuous Integration and Continuous Delivery.
 
 What's different then?
@@ -34,7 +34,7 @@ Self-hosted server is required for Jenkins though where GitHub has a free tier f
 
 
 
-# Experiement:
+## Experiement:
 1. Run docker run -p 8080:8080 jenkins/jenkins:lts
 2. Go to http://localhost:8080 and install suggested plugins for Jenkins
 3. Create username and password
@@ -77,7 +77,7 @@ I experimented doing a small helow World pipeline:
  ![Stage view](./console_log.png)
 
 
-Below is an example of what a CI pipeline would look like in Jenkins for what we did in github actions for this class.
+### Below is an example of what a CI pipeline would look like in Jenkins for what we did in github actions for this class.
 
  ```
   pipeline {
