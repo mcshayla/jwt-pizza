@@ -67,7 +67,8 @@ I experimented doing a small helow World pipeline:
             echo 'Cleaning up...'
         }
     }
-} ```
+} 
+```
 
  - It's pretty similar to github actions pipeline and the states just run in order.
  - I ran the build and then observed the results in the console log which also looked very similar to github actions
