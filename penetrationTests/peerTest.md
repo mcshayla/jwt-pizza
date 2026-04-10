@@ -136,3 +136,9 @@
 ---
 
 ## Combined Summary of Learnings
+Through this experience we learned the importance of thinking like a penetration tester as we write code. Highlights of what we learned:
+- SQL injections are easy to do but also easy to prevent if we are cautious on what we accept as parameters
+- Repeater tool in burp was easy to send api calls attempting to do attacks.
+- It's always important to check who as user is, what roles they have, and why they are trying to do the action they are trying to do (and then prevent them if unreasonable)
+- with the request and response headers in the dev tools, we can learn a lot about one's code just from the browser.
+- If one's repository is public, we can learn a lot about their code and create attacks from that.
