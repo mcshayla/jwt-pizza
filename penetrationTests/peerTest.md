@@ -1,13 +1,58 @@
-# Peer Penetration Testing
 
-**Peers:** Jackson Gray and Shayla McMillan
+## Reporters ##
+Jackson Gray
+Shayla McMillan
 
----
+## Self Attacks ##
 
-## Self Attacks
----
+Jackson Gray
 
-### Shayla McMillan
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 9, 2026                                                                  |
+| Target         | PUT /api/auth                                                                  |
+| Classification | Identification and Authentication Failures                                     |
+| Severity       | 2                                                                              |
+| Description    | A user is able to sign in to an account when a password is not included in the request.                |
+| Corrections    | Set a check for password to not be null                                        |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 9, 2026                                                                  |
+| Target         | PUT /api/order                                                                 |
+| Classification | Mishandled Exceptions                                                          |
+| Severity       | 4                                                                              |
+| Description    | When a parameter is missing from an order, no exception is handled.            |
+| Corrections    | Return request when parameters are missing                                     |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 9, 2026                                                                  |
+| Target         | DELETE /api/user/:userId                                                       |
+| Classification | Broken Access Control                                                          |
+| Severity       | 2                                                                              |
+| Description    | Any user can delete other users                                                |
+| Corrections    | Set a check for admin priveleges in user delete                                |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 9, 2026                                                                  |
+| Target         | DELETE /api/franchise/:franchiseId                                             |
+| Classification | Broken Access Control                                                          |
+| Severity       | 2                                                                              |
+| Description    | There is no auth check for deleting a franchise                                |
+| Corrections    | Set a check auth check within the method                                       |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 9, 2026                                                                  |
+| Target         | POST /api/auth                                                                 |
+| Classification | Identification and Authentication Failures                                     |
+| Severity       | 1                                                                              |
+| Description    | Multiple users can be created with the same email                              |
+| Corrections    | Set a check for duplicate emails                                               |
+
+Shayla McMillan
 
 **Attack 1**
 
@@ -69,13 +114,65 @@
 | Images | ![jwt token](jwt_decoded.png) |
 | Corrections | I changed it so the whole user is not passed into the the token, only the id and role. |
 
----
+## Peer Attacks ##
 
-## Peer Attacks
+Jackson's attack on Shayla
 
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 10, 2026                                                                  |
+| Target         | PUT /api/auth                                                                  |
+| Classification | Identification and Authentication Failures                                     |
+| Severity       | 2                                                                              |
+| Description    | A user is able to sign in to an account when a password is not included in the request.  |
+| Corrections    | I was able to successfully login with an existing user without using a correct password. |
 
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 10, 2026                                                                  |
+| Target         | PUT /api/order                                                                 |
+| Classification | Mishandled Exceptions                                                          |
+| Severity       | 0                                                                              |
+| Description    | When a parameter is missing from an order, no exception is handled.            |
+| Corrections    | I was unsuccessful to shut down the server in this way becuase there was a null check for the passed SQL. |
 
-### Shayla McMillan attack on Jackson Gray
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 10, 2026                                                                  |
+| Target         | DELETE /api/user/:userId                                                       |
+| Classification | Broken Access Control                                                          |
+| Severity       | 0                                                                              |
+| Description    | Any user can delete other users.                                               |
+| Corrections    | I was unsuccessful in doing this as there was an auth check for doing this action. |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 10, 2026                                                                  |
+| Target         | PUT /api/user/:userId                                                          |
+| Classification | Broken Access Control                                                          |
+| Severity       | 0                                                                              |
+| Description    | Any user can edit another user's info.                                         |
+| Corrections    | I was unsucessful in changing the admin's information from another user.       |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 10, 2026                                                                  |
+| Target         | GET /api/user/me                                                               |
+| Classification | Insecure Design                                                                |
+| Severity       | 0                                                                              |
+| Description    | Any user can elevate their role using edit.                                    |
+| Corrections    | I was unsucessful in changing the role of a user to admin thorugh manipulating the request sent when editing.       |
+
+| Item           | Result                                                                         |
+| -------------- | ------------------------------------------------------------------------------ |
+| Date           | April 10, 2026                                                                  |
+| Target         | POST /api/auth                                                                 |
+| Classification | Identification and Authentication Failures                                     |
+| Severity       | 1                                                                              |
+| Description    | Multiple users can be created with the same email.                             |
+| Corrections    | I was successfully able to create another user with the admin email a@jwt.com by creating another user with this email.  |
+
+Shayla's attacks on Jackson
 
 **Attack 1**
 
@@ -142,3 +239,4 @@ Through this experience we learned the importance of thinking like a penetration
 - It's always important to check who as user is, what roles they have, and why they are trying to do the action they are trying to do (and then prevent them if unreasonable)
 - with the request and response headers in the dev tools, we can learn a lot about one's code just from the browser.
 - If one's repository is public, we can learn a lot about their code and create attacks from that.
+- null checks prevent the server from not handling exceptions resulting in a server shutdown
